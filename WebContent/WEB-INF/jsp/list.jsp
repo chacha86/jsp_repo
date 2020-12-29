@@ -11,6 +11,13 @@
 <title>Insert title here</title>
 </head>
 
+<c:if test="${loginedMember != null}">
+${loginedMember.nickname}님 반갑습니다!
+</c:if>
+<c:if test="${loginedMember == null}">
+<a href="/web-exam1/article?action=showLogin">로그인</a>
+<a href="/web-exam1/article?action=showMember">회원가입</a>
+</c:if>
 <body>
 	<h1>게시물 목록</h1>
 	<table border="1">
@@ -26,7 +33,16 @@
 		<c:forEach var="article" items="${myData}">
 		<tr>
 			<td>${article.id}</td>
-			<td><a href="/web-exam1/article?action=detail&id=${article.id}">${article.title}_${article.id}</a></td>
+			<td>
+				<c:choose>
+					<c:when test="${loginedMember == null}">
+						<a href="/web-exam1/article?action=showLogin">${article.title}_${article.id}</a>
+					</c:when>
+					<c:otherwise>
+						<a href="/web-exam1/article?action=detail&id=${article.id}">${article.title}_${article.id}</a>
+					</c:otherwise>
+				</c:choose>
+			</td>
 			<td>${article.nickname}</td>
 			<td>${article.regDate}</td>
 			<td>${article.hit}</td>
@@ -35,7 +51,7 @@
 						
 
 	</table>
-	<a href="/web-exam1//article?action=showAdd">글쓰기</a>
+	<a href="/web-exam1/article?action=showAdd&mid=${ loginedMember.id }">글쓰기</a>
 	
 	
 </body>

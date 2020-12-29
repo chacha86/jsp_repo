@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
 <h1>게시물 등록</h1>
 <body>
 	<form action="/web-exam1/article">
@@ -13,7 +14,7 @@
 		<br> 
 		내용 : <input type="text" name="body" />
 		<br>
-		<input type="hidden" name="mid" value="1"/>
+		<input type="hidden" name="mid" value="${ loginedMember.id }"/>
 		<input type="hidden" name="action" value="insert"/>
 		<input type="submit" />
 		

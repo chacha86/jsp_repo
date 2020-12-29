@@ -45,6 +45,9 @@ public class Controller extends HttpServlet {
 			String body = request.getParameter("body");
 			int mid = Integer.parseInt(request.getParameter("mid"));
 			
+			Member loginedMember = mdao.getMemberById(mid);
+			request.setAttribute("loginedMember", loginedMember);
+			
 			dao.insertArticle(title, body, mid);
 			
 		} else if(action.equals("update")) {
@@ -67,7 +70,16 @@ public class Controller extends HttpServlet {
 			dest = "WEB-INF/jsp/detail.jsp";
 		} else if(action.equals("showAdd")) {
 			
+			int mid = Integer.parseInt(request.getParameter("mid"));
+			Member loginedMember = mdao.getMemberById(mid);
+			
+			System.out.println("====" + loginedMember.getId());
+			System.out.println("====" + loginedMember.getNickname());
+			request.setAttribute("loginedMember", loginedMember);
+			
 			dest = "WEB-INF/jsp/addForm.jsp";
+			
+			
 		} else if(action.equals("showUpdate")) {
 			
 			int id = Integer.parseInt(request.getParameter("id"));
@@ -86,7 +98,10 @@ public class Controller extends HttpServlet {
 			Member loginedMember = mdao.getMemberByLoginIdAndLoginPw(loginId, loginPw);
 			
 			if(loginedMember != null) {
+				
+				request.setAttribute("loginedMember", loginedMember);
 				dest = "WEB-INF/jsp/list.jsp";
+				
 			} else {
 				dest = "WEB-INF/jsp/loginFailed.jsp";
 			}
