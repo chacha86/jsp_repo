@@ -51,7 +51,7 @@ ${loginedMember.nickname}님 반갑습니다!
 						
 
 	</table>
-	<a href="/web-exam1/article?action=showAdd&mid=${ loginedMember.id }">글쓰기</a>
+	<a href="/web-exam1/article?action=showAdd">글쓰기</a>
 	
 	
 </body>

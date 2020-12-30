@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import board.article.Article;
 import board.article.ArticleDao;
@@ -69,17 +70,9 @@ public class Controller extends HttpServlet {
 			request.setAttribute("myData2", article);
 			dest = "WEB-INF/jsp/detail.jsp";
 		} else if(action.equals("showAdd")) {
-			
-			int mid = Integer.parseInt(request.getParameter("mid"));
-			Member loginedMember = mdao.getMemberById(mid);
-			
-			System.out.println("====" + loginedMember.getId());
-			System.out.println("====" + loginedMember.getNickname());
-			request.setAttribute("loginedMember", loginedMember);
-			
+						
 			dest = "WEB-INF/jsp/addForm.jsp";
-			
-			
+						
 		} else if(action.equals("showUpdate")) {
 			
 			int id = Integer.parseInt(request.getParameter("id"));
@@ -99,7 +92,11 @@ public class Controller extends HttpServlet {
 			
 			if(loginedMember != null) {
 				
-				request.setAttribute("loginedMember", loginedMember);
+				// session 저장소 저장하는 법
+				HttpSession session = request.getSession();
+				session.setAttribute("loginedMember", loginedMember);
+				
+				//request.setAttribute("loginedMember", loginedMember);
 				dest = "WEB-INF/jsp/list.jsp";
 				
 			} else {
