@@ -15,8 +15,8 @@
 ${loginedMember.nickname}님 반갑습니다!
 </c:if>
 <c:if test="${loginedMember == null}">
-<a href="/web-exam1/article?action=showLogin">로그인</a>
-<a href="/web-exam1/article?action=showMember">회원가입</a>
+<a href="/web-exam1/member?action=showLogin">로그인</a>
+<a href="/web-exam1/member?action=showMember">회원가입</a>
 </c:if>
 <body>
 	<h1>게시물 목록</h1>
