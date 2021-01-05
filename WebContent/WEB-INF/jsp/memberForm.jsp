@@ -9,7 +9,7 @@
 <body>
 	<h1>회원가입 페이지</h1>
 
-	<form action="/web-exam1/article">
+	<form action="/web-exam1/member">
 		아이디<br> <input type="text" name="loginId" /><br>
 		비밀번호<br> <input type="text" name="loginPw" /><br> 
 	    이름<br> <input type="text" name="nickname" /><br>
