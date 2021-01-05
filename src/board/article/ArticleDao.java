@@ -41,13 +41,13 @@ public class ArticleDao {
 		return db.getRow(sql, new ArticleRowMapper(), aid);
 	}
 	
-	public int insertReply(int aid, String body) {
-		String sql = "insert into reply set aid = ?, body = ?, writer = '익명', regDate = NOW()";
-		return db.updateQuery(sql, aid, body);
+	public int insertReply(int aid, String body, int mid) {
+		String sql = "insert into reply set aid = ?, body = ?, mid = ?, regDate = NOW()";
+		return db.updateQuery(sql, aid, body, mid);
 	}
 
 	public ArrayList<Reply> getRepliesByArticleId(int id) {
-		String sql = "select * from reply where aid = ?";
+		String sql = "SELECT * FROM reply r INNER JOIN `member` m ON r.mid = m.id where aid = ?";
 		return db.getRows(sql, new ReplyRowMapper(), id);
 	}
 
@@ -105,5 +105,15 @@ public class ArticleDao {
 	public int getTotalCountOfArticles() {
 		String sql = "SELECT * FROM article";
 		return db.getRows(sql, new ArticleRowMapper()).size();
+	}
+
+	public void deleteReply(int id) {
+		String sql = "DELETE FROM reply WHERE id = ?";
+		db.updateQuery(sql, id);
+	}
+
+	public void updateReply(String body, int id) {
+		String sql = "UPDATE reply SET `body` = ? WHERE id = ?";
+		db.updateQuery(sql, body, id);
 	}
 }
