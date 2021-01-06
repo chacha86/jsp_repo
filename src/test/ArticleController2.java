@@ -38,48 +38,41 @@ public class ArticleController2 {
 
 		} else if (action.equals("showUpdate")) {
 			dest = showUpdate(request, response);
-		} else if(action.equals("doInsertReply")) {
-			dest = insertReply(request, response);
-		} else if(action.equals("deleteReply")) {
+			
+		} else if (action.equals("doDeleteReply")) {
 			dest = deleteReply(request, response);
-		} else if(action.equals("showReplyUpdate")) {
-			dest = showReplyUpdate(request, response);
+			
+		} else if (action.equals("doInsertReply")) {
+			dest = insertReply(request, response);
+			
 		}
 
 		return dest;
 	}
 
-	private String showReplyUpdate(HttpServletRequest request, HttpServletResponse response) {
+	
+	private String insertReply(HttpServletRequest request, HttpServletResponse response) {
 		
 		int aid = Integer.parseInt(request.getParameter("aid"));
-		int id = Integer.parseInt(request.getParameter("id"));
+		int mid = Integer.parseInt(request.getParameter("mid"));
 		String body = request.getParameter("rbody");
 		
-		dao.updateReply(body, id);
+		dao.insertReply(aid, body, mid);
 		
-		return "redirect: /web-exam1/article?action=detail&id=" + aid;
-	}
-	
-	private String deleteReply(HttpServletRequest request, HttpServletResponse response) {
-		
-		int id = Integer.parseInt(request.getParameter("id"));
-		
-		dao.deleteReply(id);
-		
-		int aid = Integer.parseInt(request.getParameter("aid"));
 		
 		return "redirect: /web-exam1/article?action=detail&id=" + aid;
 	}
 
-	private String insertReply(HttpServletRequest request, HttpServletResponse response) {
+
+	private String deleteReply(HttpServletRequest request, HttpServletResponse response) {
 		
-		String body = request.getParameter("rbody");
+		int id = Integer.parseInt(request.getParameter("id"));
 		int aid = Integer.parseInt(request.getParameter("aid"));
-		int mid = Integer.parseInt(request.getParameter("mid"));
-		dao.insertReply(aid, body, mid);
+		dao.deleteReplyById(id);
 		
 		return "redirect: /web-exam1/article?action=detail&id=" + aid;
 	}
+
 
 	private String showUpdate(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));

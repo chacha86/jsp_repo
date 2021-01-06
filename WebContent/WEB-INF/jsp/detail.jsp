@@ -25,18 +25,20 @@
 <c:forEach items ="${replies}" var = "reply">
 	${ reply.nickname }<br>
 	${ reply.body }<br>
-	${ reply.regDate }
-	<a href="/web-exam1/article?action=showReplyUpdate&id=${reply.id}&aid=${myData2.id}">수정</a>
-	<a href="/web-exam1/article?action=deleteReply&id=${reply.id}&aid=${myData2.id}" >삭제</a>
+	${ reply.regDate } 
+	<c:if test="${ reply.mid == loginedMember.id }">
+	<a href="#" >수정</a> <a href="/web-exam1/article?action=doDeleteReply&id=${ reply.id }&aid=${myData2.id}" >삭제</a>
+	</c:if>
 	<hr>
 </c:forEach>
+${ loginedMember.nickname }<br>
 <form action="/web-exam1/article">
-	<input type="text" name="rbody" placeholder="댓글을 입력해주세요" />
-	<input type="hidden" name="aid" value="${myData2.id}"/>
-	<input type="hidden" name="mid" value="${loginedMember.id}"/>
-	<input type="hidden" name="action" value="doInsertReply"/>
+	<input type="text" name="rbody" placeholder="댓글을 남겨보세요"/>
+	<input type="hidden" name="aid" value="${myData2.id}" />
+	<input type="hidden" name="mid" value="${loginedMember.id}" />
+	<input type="hidden" name="action" value="doInsertReply" />
 	<input type="submit" value="등록" />
 </form>
-
+<hr>
 </body>
 </html>

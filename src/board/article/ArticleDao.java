@@ -40,11 +40,6 @@ public class ArticleDao {
 		String sql = "SELECT a.*, m.nickname nickname, COUNT(l.aid) likeCnt FROM article a INNER JOIN `member` m ON a.mid = m.id LEFT JOIN `like` l ON a.id = l.aid GROUP BY a.id having a.id = ?";
 		return db.getRow(sql, new ArticleRowMapper(), aid);
 	}
-	
-	public int insertReply(int aid, String body, int mid) {
-		String sql = "insert into reply set aid = ?, body = ?, mid = ?, regDate = NOW()";
-		return db.updateQuery(sql, aid, body, mid);
-	}
 
 	public ArrayList<Reply> getRepliesByArticleId(int id) {
 		String sql = "SELECT * FROM reply r INNER JOIN `member` m ON r.mid = m.id where aid = ?";
@@ -107,13 +102,13 @@ public class ArticleDao {
 		return db.getRows(sql, new ArticleRowMapper()).size();
 	}
 
-	public void deleteReply(int id) {
-		String sql = "DELETE FROM reply WHERE id = ?";
+	public void deleteReplyById(int id) {
+		String sql = "DELETE FROM reply where id = ?";
 		db.updateQuery(sql, id);
 	}
-
-	public void updateReply(String body, int id) {
-		String sql = "UPDATE reply SET `body` = ? WHERE id = ?";
-		db.updateQuery(sql, body, id);
+	
+	public void insertReply(int aid, String body, int mid) {
+		String sql = "INSERT INTO reply SET aid = ?, `body` = ?, `mid` = ?, regDate = NOW()";
+		db.updateQuery(sql, aid, body, mid);
 	}
 }

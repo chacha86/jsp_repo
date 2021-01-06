@@ -9,6 +9,6 @@
 <body>
 로그인 실패!!<br>
 <a href="/web-exam1/article?action=list">목록으로</a>
-<a href="/web-exam1/article?action=showLogin">로그인</a>
+<a href="/web-exam1/member?action=showLogin">로그인</a>
 </body>
 </html>
