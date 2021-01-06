@@ -23,12 +23,26 @@
 <hr>
 
 <c:forEach items ="${replies}" var = "reply">
-	${ reply.nickname }<br>
-	${ reply.body }<br>
-	${ reply.regDate } 
-	<c:if test="${ reply.mid == loginedMember.id }">
-	<a href="#" >수정</a> <a href="/web-exam1/article?action=doDeleteReply&id=${ reply.id }&aid=${myData2.id}" >삭제</a>
-	</c:if>
+	<c:choose>
+		<c:when test="${ flag == 'u' && rid == reply.id }">
+			${ loginedMember.nickname }<br>
+			<form action="/web-exam1/article">
+				<input type="text" name="rbody" value="${reply.body}"/>
+				<input type="hidden" name="rid" value="${reply.id}"/>
+				<input type="hidden" name="aid" value="${myData2.id}" />
+				<input type="hidden" name="action" value="doUpdateReply" />
+				<input type="submit" value="등록" />
+			</form>
+		</c:when>
+		<c:otherwise>
+			${ reply.nickname }<br>
+			${ reply.body }<br>
+			${ reply.regDate } 
+			<c:if test="${ reply.mid == loginedMember.id }">
+			<a href="/web-exam1/article?action=showReplyUpdate&id=${ reply.id }&aid=${myData2.id}" >수정</a> <a href="/web-exam1/article?action=doDeleteReply&id=${ reply.id }&aid=${myData2.id}" >삭제</a>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 	<hr>
 </c:forEach>
 ${ loginedMember.nickname }<br>

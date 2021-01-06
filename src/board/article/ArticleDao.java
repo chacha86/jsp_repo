@@ -111,4 +111,10 @@ public class ArticleDao {
 		String sql = "INSERT INTO reply SET aid = ?, `body` = ?, `mid` = ?, regDate = NOW()";
 		db.updateQuery(sql, aid, body, mid);
 	}
+	
+	public void updateReply(String body, int id) {
+		String sql = "UPDATE reply SET `body` = ? WHERE id = ?";
+		db.updateQuery(sql, body, id);
+		
+	}
 }
