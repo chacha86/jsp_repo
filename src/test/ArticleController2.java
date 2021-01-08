@@ -45,12 +45,53 @@ public class ArticleController2 {
 		} else if (action.equals("doInsertReply")) {
 			dest = insertReply(request, response);
 			
+		} else if(action.equals("showReplyUpdate")) {
+			dest = showReplyUpdate(request, response);
+			
+		} else if(action.equals("doUpdateReply")) {
+			dest = updateReply(request, response);
+		} else if(action.equals("doSearch")) {
+			dest = doSearch(request, response);
 		}
 
 		return dest;
 	}
 
 	
+	private String doSearch(HttpServletRequest request, HttpServletResponse response) {
+		
+		String dateInterval = request.getParameter("dateInterval");
+		String sTarget = request.getParameter("sTarget");
+		String keyword = request.getParameter("keyword");
+		
+		ArrayList<Article> searchedArticles =dao.searchArticle(dateInterval, sTarget, keyword);
+		request.setAttribute("myData", searchedArticles);
+		
+		return "WEB-INF/jsp/list.jsp";
+	}
+
+
+	private String updateReply(HttpServletRequest request, HttpServletResponse response) {
+
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		int rid = Integer.parseInt(request.getParameter("rid"));
+		String body = request.getParameter("rbody");
+		
+		dao.updateReply(body, rid);
+		
+		return "redirect: /web-exam1/article?action=detail&id=" + aid;
+	}
+
+
+	private String showReplyUpdate(HttpServletRequest request, HttpServletResponse response) {
+
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		return "redirect: /web-exam1/article?action=detail&id=" + aid + "&flag=u&rid=" + id;
+	}
+
+
 	private String insertReply(HttpServletRequest request, HttpServletResponse response) {
 		
 		int aid = Integer.parseInt(request.getParameter("aid"));
@@ -85,9 +126,18 @@ public class ArticleController2 {
 	private String detail(HttpServletRequest request, HttpServletResponse response) {
 
 		int id = Integer.parseInt(request.getParameter("id"));
+		String flag = request.getParameter("flag");
+		
 		Article article = dao.getArticleById(id);
 		ArrayList<Reply> replies = dao.getRepliesByArticleId(id);
+		
+		if(flag != null) {
+			int rid = Integer.parseInt(request.getParameter("rid"));
 
+			request.setAttribute("flag", flag);
+			request.setAttribute("rid", rid);
+		}
+		
 		request.setAttribute("myData2", article);
 		request.setAttribute("replies", replies);
 
