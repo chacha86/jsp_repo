@@ -120,7 +120,7 @@ public class ArticleDao {
 
 	public ArrayList<Article> searchArticle(String dateInterval, String sTarget, String keyword) {
 		
-		String sql = "SELECT * FROM article a INNER JOIN `MEMBER` m ON a.mid = m.id WHERE ";
+		String sql = "SELECT *, (SELECT COUNT(aid) FROM `like` WHERE aid = a.id) likeCnt FROM article a INNER JOIN `MEMBER` m ON a.mid = m.id WHERE ";
 		
 		String dateStr= "a.regDate > DATE_ADD(NOW(), INTERVAL " + dateInterval + ") AND ";
 		if(dateInterval.equals("all")) {

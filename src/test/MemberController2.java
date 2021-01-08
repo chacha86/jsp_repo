@@ -27,11 +27,23 @@ public class MemberController2 {
 
 		} else if (action.equals("doInsertMember")) {
 			dest = doInsertMember(request, response);
-		} 
+			
+		} else if (action.equals("doLogout")) {
+			dest = doLogout(request, response);
+			
+		}
 		
 		return dest;
 	}
 	
+	private String doLogout(HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		session.invalidate();
+		
+		return "redirect: /web-exam1/article?action=list";
+	}
+
 	private String doLogin(HttpServletRequest request, HttpServletResponse response) {
 
 		String loginId = request.getParameter("loginId");

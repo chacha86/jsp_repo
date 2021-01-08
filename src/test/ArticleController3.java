@@ -1,4 +1,4 @@
-package board.article;
+package test;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ import board.article.Article;
 import board.article.ArticleDao;
 import board.article.Reply;
 
-public class ArticleController2 {
+public class ArticleController3 {
 	ArticleDao dao = new ArticleDao();
 
 	String doAction(HttpServletRequest request, HttpServletResponse response) {
@@ -38,67 +38,48 @@ public class ArticleController2 {
 
 		} else if (action.equals("showUpdate")) {
 			dest = showUpdate(request, response);
-			
-		} else if (action.equals("doDeleteReply")) {
-			dest = deleteReply(request, response);
-			
-		} else if (action.equals("doInsertReply")) {
+		} else if(action.equals("doInsertReply")) {
 			dest = insertReply(request, response);
-			
+		} else if(action.equals("deleteReply")) {
+			dest = deleteReply(request, response);
 		} else if(action.equals("showReplyUpdate")) {
 			dest = showReplyUpdate(request, response);
-			
-		} else if(action.equals("doUpdateReply")) {
-			dest = updateReply(request, response);
 		}
 
 		return dest;
 	}
 
-	
-	private String updateReply(HttpServletRequest request, HttpServletResponse response) {
-
-		int aid = Integer.parseInt(request.getParameter("aid"));
-		int rid = Integer.parseInt(request.getParameter("rid"));
-		String body = request.getParameter("rbody");
-		
-		dao.updateReply(body, rid);
-		
-		return "redirect: /web-exam1/article?action=detail&id=" + aid;
-	}
-
-
 	private String showReplyUpdate(HttpServletRequest request, HttpServletResponse response) {
-
+		
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		int id = Integer.parseInt(request.getParameter("id"));
-		
-		return "redirect: /web-exam1/article?action=detail&id=" + aid + "&flag=u&rid=" + id;
-	}
-
-
-	private String insertReply(HttpServletRequest request, HttpServletResponse response) {
-		
-		int aid = Integer.parseInt(request.getParameter("aid"));
-		int mid = Integer.parseInt(request.getParameter("mid"));
 		String body = request.getParameter("rbody");
 		
-		dao.insertReply(aid, body, mid);
-		
+		dao.updateReply(body);
 		
 		return "redirect: /web-exam1/article?action=detail&id=" + aid;
 	}
-
-
+	
 	private String deleteReply(HttpServletRequest request, HttpServletResponse response) {
 		
 		int id = Integer.parseInt(request.getParameter("id"));
+		
+		dao.deleteReply(id);
+		
 		int aid = Integer.parseInt(request.getParameter("aid"));
-		dao.deleteReplyById(id);
 		
 		return "redirect: /web-exam1/article?action=detail&id=" + aid;
 	}
 
+	private String insertReply(HttpServletRequest request, HttpServletResponse response) {
+		
+		String body = request.getParameter("rbody");
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		int mid = Integer.parseInt(request.getParameter("mid"));
+		dao.insertReply(aid, body, mid);
+		
+		return "redirect: /web-exam1/article?action=detail&id=" + aid;
+	}
 
 	private String showUpdate(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -111,18 +92,9 @@ public class ArticleController2 {
 	private String detail(HttpServletRequest request, HttpServletResponse response) {
 
 		int id = Integer.parseInt(request.getParameter("id"));
-		String flag = request.getParameter("flag");
-		
 		Article article = dao.getArticleById(id);
 		ArrayList<Reply> replies = dao.getRepliesByArticleId(id);
-		
-		if(flag != null) {
-			int rid = Integer.parseInt(request.getParameter("rid"));
 
-			request.setAttribute("flag", flag);
-			request.setAttribute("rid", rid);
-		}
-		
 		request.setAttribute("myData2", article);
 		request.setAttribute("replies", replies);
 

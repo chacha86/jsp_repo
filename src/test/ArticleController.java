@@ -1,6 +1,7 @@
 //package test;
 //
 //import java.io.IOException;
+//import java.io.PrintWriter;
 //import java.util.ArrayList;
 //
 //import javax.servlet.RequestDispatcher;
@@ -9,12 +10,9 @@
 //import javax.servlet.http.HttpServlet;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
 //
 //import board.article.Article;
 //import board.article.ArticleDao;
-//import board.member.Member;
-//import board.member.MemberDao;
 //
 //@WebServlet("/article")
 //public class ArticleController extends HttpServlet {
@@ -22,13 +20,13 @@
 //	ArticleDao dao = new ArticleDao();
 //	
 //	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		
-//		response.setCharacterEncoding("UTF-8");		
+//	    
 //		String action = request.getParameter("action");
 //		String dest = "";
 //		
-//		if(action.equals("list")) {			
-//			dest = list(request, response);
+//		if(action.equals("list")) {
+//			//out.println("<h1>안녕하세요</h1>");
+//			//dest = list(request, response);
 //			
 //		} else if(action.equals("insert")) {
 //			dest = insert(request, response);
@@ -53,9 +51,9 @@
 //		}
 //		
 //		// forwading
-//		RequestDispatcher rd = request.getRequestDispatcher(dest);
-//		rd.forward(request, response);
-//		
+////		RequestDispatcher rd = request.getRequestDispatcher(dest);
+////		rd.forward(request, response);
+////		
 //		
 //	}
 //
@@ -108,7 +106,6 @@
 //	public String list(HttpServletRequest request, HttpServletResponse response) {
 //		ArrayList<Article> articles = dao.getArticles();
 //		request.setAttribute("myData", articles);
-//		System.out.println("bb");
 //		return "WEB-INF/jsp/list.jsp";
 //	}
 //}

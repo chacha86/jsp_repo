@@ -12,7 +12,8 @@
 </head>
 
 <c:if test="${loginedMember != null}">
-${loginedMember.nickname}님 반갑습니다!
+${loginedMember.nickname}님 반갑습니다!<br>
+<a href="/web-exam1/member?action=doLogout">로그아웃</a><br>
 </c:if>
 <c:if test="${loginedMember == null}">
 <a href="/web-exam1/member?action=showLogin">로그인</a>
@@ -52,7 +53,17 @@ ${loginedMember.nickname}님 반갑습니다!
 
 	</table>
 	<a href="/web-exam1/article?action=showAdd">글쓰기</a>
-	
+	<hr>
+	<c:if test="${pagination.currentPageBlock != 1 }">
+		<a href="/web-exam1/article?action=list&pageNo=${pagination.startPageNoInCurrentBlock - 1}">이전</a>
+	</c:if>
+	<c:forEach begin="${ pagination.startPageNoInCurrentBlock }" end="${ pagination.endPageNoInCurrentBlock }" var="i">
+		<a href="/web-exam1/article?action=list&pageNo=${i}">${i}</a>
+	</c:forEach>
+	<c:if test="${pagination.currentPageBlock != pagination.lastPageNo }">
+		<a href="/web-exam1/article?action=list&pageNo=${pagination.endPageNoInCurrentBlock + 1}">다음</a>
+	</c:if>
+	<hr>
 	<form action="/web-exam1/article">
 		<select name="dateInterval">
 			<option value="all">전체기간</option>
